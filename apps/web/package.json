@@ -1,0 +1,37 @@
+{
+  "name": "@sagecards/web",
+  "version": "0.1.0",
+  "private": true,
+  "description": "SageCards web app (Next.js 16 App Router)",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "next": "^16.3.3",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@sagecards/eslint-config": "workspace:*",
+    "@sagecards/tsconfig": "workspace:*",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.0",
+    "@testing-library/react": "^16.3.2",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^6.1.0",
+    "eslint": "^9.0.0",
+    "jsdom": "^30.0.1",
+    "postcss": "^8.4.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.0.0",
+    "vitest": "^4.0.0"
+  }
+}
