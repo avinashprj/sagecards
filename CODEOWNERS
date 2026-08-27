@@ -1,0 +1,6 @@
+# Code owners — main is protected, so critical paths need a human reviewer.
+# The author (human or agent) of a change is never its own approver.
+
+*                       @avinashprj
+docs/*                  @avinashprj
+packages/shared-types/  @avinashprj
