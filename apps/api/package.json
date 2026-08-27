@@ -1,0 +1,33 @@
+{
+  "name": "@sagecards/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "SageCards API (NestJS modular monolith)",
+  "scripts": {
+    "dev": "tsc -p tsconfig.build.json && node --watch dist/main.js",
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node dist/main.js",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.2.3",
+    "@nestjs/config": "^12.0.0",
+    "@nestjs/core": "^11.2.3",
+    "@nestjs/mongoose": "^11.0.4",
+    "@nestjs/platform-express": "^11.2.3",
+    "mongoose": "^9.9.4",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1"
+  },
+  "devDependencies": {
+    "@sagecards/eslint-config": "workspace:*",
+    "@sagecards/tsconfig": "workspace:*",
+    "@types/node": "^24.0.0",
+    "eslint": "^9.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^4.0.0"
+  }
+}
