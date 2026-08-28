@@ -8,3 +8,13 @@
 - Follow `docs/plans/PHASE-*.md` checklists. Commit per step, one concern per commit.
 - Keep the docs/ADR up to date when a decision changes.
 - **Never net to `main` directly, never push to production** — read `docs/review-policy.md`. `main` is protected: every change ships as a PR, gets human review + approval, and merges before it can ever deploy. Production ships only off merged `main`. You end at a green PR awaiting review; you do not self-approve or self-merge.
+
+## Agent skills
+
+### Issue tracker
+
+Issues and specs live as markdown files under `.scratch/<feature-slug>/` in this repo (no external tracker). See `docs/agents/issue-tracker.md`.
+
+### Domain docs
+
+Single-context layout today: one root `CONTEXT.md` (created lazily by `/domain-modeling`) plus `docs/adr/` for decisions. See `docs/agents/domain.md`.
