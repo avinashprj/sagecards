@@ -8,12 +8,13 @@
 - Follow `docs/plans/PHASE-*.md` checklists. Commit per step, one concern per commit.
 - Keep the docs/ADR up to date when a decision changes.
 - **Never net to `main` directly, never push to production** — read `docs/review-policy.md`. `main` is protected: every change ships as a PR, gets human review + approval, and merges before it can ever deploy. Production ships only off merged `main`. You end at a green PR awaiting review; you do not self-approve or self-merge.
+- **Plan before code, vet before merge** — the human vets the plan before any PR merges, for any PR, any commit. No plan-first commit, no reviewing a change you already made: the plan/design is reviewed and approved _before_ implementation begins.
 
 ## Agent skills
 
 ### Issue tracker
 
-Issues and specs live as markdown files under `.scratch/<feature-slug>/` in this repo (no external tracker). See `docs/agents/issue-tracker.md`.
+No external tracker; issues/specs are tracked in `docs/plans/PHASE-*.md` checklists and GitHub PRs. (The `.scratch/` local tracker was removed — solo repo.)
 
 ### Domain docs
 

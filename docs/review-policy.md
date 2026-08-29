@@ -4,6 +4,8 @@ The deploy pipeline is the enforcement mechanism. `main` is **protected**: nothi
 
 ## The gate (in order)
 
+0. **Plan first, vet before merge.** The human vets the **plan/design** before any implementation begins — any PR, any commit. No code is written against an unvetted plan; a plan-first commit (design and implementation in one change) never gets merged.
+
 1. **Branch, never `main`.** All work happens on a feature branch. `main` is read-only to both human and agent.
 2. **PR with CI green.** Push the branch, open a PR. `typecheck → lint → test → build` status checks must pass.
 3. **Human review + approval.** At least one human approves the PR. A merging agent is not its own reviewer. Stale approvals are dismissed when a new commit lands.
