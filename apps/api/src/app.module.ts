@@ -6,11 +6,11 @@ import { HealthModule } from './health/health.module.js'
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    // Phase 1-A: MongoDB wiring. URI from DATABASE_URL; missing config fails
-    // loudly at boot (getOrThrow). The short server-selection timeout + bounded
-    // retry loop make an unreachable DB fail loudly at boot (~15s) instead of
-    // retrying silently for minutes. No process.exit on connection errors —
-    // post-boot transient errors should let mongoose self-heal/reconnect.
+    // URI from DATABASE_URL; missing config fails loudly at boot (getOrThrow).
+    // The short server-selection timeout + bounded retry loop make an
+    // unreachable DB fail at boot (~15s) instead of retrying silently — and no
+    // process.exit on connection errors, so post-boot transient errors let
+    // mongoose self-heal/reconnect.
     MongooseModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
