@@ -4,13 +4,13 @@ The deploy pipeline is the enforcement mechanism. `main` is **protected**: nothi
 
 ## The gate (in order)
 
-0. **Plan first, vet before merge.** The human vets the **plan/design** before any implementation begins — any PR, any commit. No code is written against an unvetted plan; a plan-first commit (design and implementation in one change) never gets merged.
-
-1. **Branch, never `main`.** All work happens on a feature branch. `main` is read-only to both human and agent.
-2. **PR with CI green.** Push the branch, open a PR. `typecheck → lint → test → build` status checks must pass.
-3. **Human review + approval.** At least one human approves the PR. A merging agent is not its own reviewer. Stale approvals are dismissed when a new commit lands.
-4. **Merge to `main`.** Merge (squash) the PR into `main`. The review already happened — nothing rebuilds "post-merge" that skips review.
-5. **Deploy off merged `main`.** Production deploys from the merged `main` ref or a Git tag cut from it — never from a feature branch.
+0. **Human approves the code before it is committed.** No `git commit`, no `git push`, no PR is opened until a human has reviewed and approved the **working-tree diff**. The agent presents the uncommitted code for approval; only on explicit sign-off does it commit, push, and open the PR. This applies to **every commit and every PR** — there is no "just a local branch commit."
+1. **Plan first, vet before writing.** The human vets the **plan/design** before any implementation begins. No code is written against an unvetted plan.
+2. **Branch, never `main`.** All work happens on a feature branch. `main` is read-only to both human and agent.
+3. **PR with CI green.** After the human approves the diff, the agent commits, pushes, and opens a PR. `typecheck → lint → test → build` status checks must pass.
+4. **Human review + approval (final).** At least one human approves the PR. A merging agent is not its own reviewer. Stale approvals are dismissed when a new commit lands.
+5. **Merge to `main`.** Merge (squash) the PR into `main`. The review already happened — nothing rebuilds "post-merge" that skips review.
+6. **Deploy off merged `main`.** Production deploys from the merged `main` ref or a Git tag cut from it — never from a feature branch.
 
 ## Why production is safe
 
