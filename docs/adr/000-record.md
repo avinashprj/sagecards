@@ -41,3 +41,11 @@ Production safety is structural, not trust-based. `main` is protected by a GitHu
 - User identity: email + name + image + optional password. Google imports name + photo + verified email onto the user.
 
 **Consequences**: same-origin httpOnly cookies, no CORS; session reads served by the Next server itself (fewer hops/latency); backend independently secured; the authorization boundary sits where Next 16 recommends (server components/route handlers/server actions). Slightly more Next code than a raw proxy, but the correct secure shape for a separate backend with no rework later.
+
+## 000-009 api: Better-Auth integration shape — thin bridge, not the community NestJS package
+
+**Context**: Better-Auth's official NestJS doc recommends `@thallesp/nestjs-better-auth`: disable Nest's body parser globally, import the package's `AuthModule`, and let its global `AuthGuard` + `@Session()` decorator own route protection. Our locked plan instead requires a typed JSON contract (shared Zod schemas at the boundary) and Phase 1-D needs explicit control of `Set-Cookie` relay for the BFF.
+
+**Decision**: Run one `betterAuth` instance as a DI provider on the shared Mongoose connection, and expose it through two doors: (1) a thin typed `AuthController` (`/auth/*`) — Zod-validated bodies, DTO whitelisting, library-error→HTTP-status mapping; (2) a dumb catch-all (`/api/auth/*`) that rebuilds a fetch `Request` (with `rawBody: true` instead of disabling the body parser globally) and delegates byte-for-byte to `auth.handler`, where the OAuth round-trip lives.
+
+**Consequences**: ~30 lines of bridge code instead of a third-party dependency; body parsing stays on for every non-auth endpoint; the cookie/header relay is explicit code we control for Phase 1-D; deviation from the official doc is deliberate and recorded here. Cost: we own the Express↔fetch translation, guarded by the supertest suite.

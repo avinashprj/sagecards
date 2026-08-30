@@ -48,9 +48,9 @@ SessionDto   = { sessionId: string, expiresAt: string(ISO), user: UserDto }
 
 ### A. API — MongoDB
 
-- [ ] `MongooseModule.forRootAsync` wired in `AppModule` using `DATABASE_URL` from `ConfigModule`
-- [ ] `.env.example` documents `DATABASE_URL` + Better-Auth vars (no real secrets)
-- [ ] API boots and connects to Atlas; fails loudly if DB is down (not silent)
+- [x] `MongooseModule.forRootAsync` wired in `AppModule` using `DATABASE_URL` from `ConfigModule`
+- [x] `.env.example` documents `DATABASE_URL` + Better-Auth vars (no real secrets)
+- [x] API boots and connects to Atlas; fails loudly if DB is down (not silent)
 
 ### B. API — auth module
 
