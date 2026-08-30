@@ -1,10 +1,27 @@
 import { Module } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { MongooseModule } from '@nestjs/mongoose'
 import { HealthModule } from './health/health.module.js'
 
-// ponytail: MongoDB wiring (MongooseModule.forRootAsync) intentionally lands in Phase 1 —
-// it needs a live Atlas URI, and the Phase 0 health shell must boot without a database.
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), HealthModule],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    // URI from DATABASE_URL; missing config fails loudly at boot (getOrThrow).
+    // The short server-selection timeout + bounded retry loop make an
+    // unreachable DB fail at boot (~15s) instead of retrying silently — and no
+    // process.exit on connection errors, so post-boot transient errors let
+    // mongoose self-heal/reconnect.
+    MongooseModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        uri: config.getOrThrow<string>('DATABASE_URL'),
+        serverSelectionTimeoutMS: 5000,
+        connectTimeoutMS: 5000,
+        retryAttempts: 2,
+        retryDelay: 1000,
+      }),
+    }),
+    HealthModule,
+  ],
 })
 export class AppModule {}
