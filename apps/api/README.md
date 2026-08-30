@@ -23,4 +23,4 @@ bun run lint       # ESLint flat config (shared)
 - ESM (`"type": "module"`), imports use `.js` extensions.
 - Data access lives here — never in the web app.
 - API contract types come from `@sagecards/shared-types` (Zod), not hand-written DTOs.
-- MongoDB wiring lands in Phase 1 (Auth); the health shell boots without a DB.
+- MongoDB wiring (Phase 1): `DATABASE_URL` required at boot — missing or unreachable DB fails loudly (bounded retries), no silent fallback.
