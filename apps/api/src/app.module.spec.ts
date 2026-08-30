@@ -14,11 +14,20 @@ describe('AppModule MongoDB wiring', () => {
     // slow binary spawn under turbo's parallel build doesn't flake the timeout.
     mongo = await MongoMemoryServer.create()
     process.env['DATABASE_URL'] = mongo.getUri()
+    // Auth module needs these at boot; dummies are fine — nothing calls Google.
+    process.env['BETTER_AUTH_SECRET'] = 'test-secret-that-is-long-enough-0123456789'
+    process.env['BETTER_AUTH_URL'] = 'http://localhost:3001'
+    process.env['GOOGLE_CLIENT_ID'] = 'test-client-id'
+    process.env['GOOGLE_CLIENT_SECRET'] = 'test-client-secret'
   }, 60_000)
 
   afterEach(async () => {
     if (originalDbUrl === undefined) delete process.env['DATABASE_URL']
     else process.env['DATABASE_URL'] = originalDbUrl
+    delete process.env['BETTER_AUTH_SECRET']
+    delete process.env['BETTER_AUTH_URL']
+    delete process.env['GOOGLE_CLIENT_ID']
+    delete process.env['GOOGLE_CLIENT_SECRET']
     await mongo.stop()
   })
 
